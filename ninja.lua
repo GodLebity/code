@@ -227,7 +227,7 @@ KillingCheats:CreateDropdown("DropDown", {
     "Palm Egg", 
     "Coral Egg", 
     "||AREA 5||", 
-    "Spartan Egg", 
+    "Gladiator Egg", 
     "Guilded Egg", 
     "Aquarius Egg"
 }, 1, function(text)
