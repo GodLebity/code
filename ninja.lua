@@ -99,6 +99,14 @@ KillingCheats:CreateToggle("Auto Punch (best bag)", function(value)
     end
 end)
 
+KillingCheats:CreateButton("get kick if do x10 fighter", function()
+print("text")
+end)
+
+KillingCheats:CreateButton("Ex: enter Area1 and fighter is 1 ", function()
+print("text")
+end)
+
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
@@ -169,6 +177,8 @@ end)
 
 local autoClaimEnabled = false -- Variable to track the toggle state
 
+local autoClaimEnabled = false -- Initialize the toggle state
+
 KillingCheats:CreateToggle("Auto Claim Gifts", function(value)
     autoClaimEnabled = value -- Update the toggle state
 
@@ -176,13 +186,12 @@ KillingCheats:CreateToggle("Auto Claim Gifts", function(value)
         -- Start a coroutine to repeatedly claim gifts
         coroutine.wrap(function()
             while autoClaimEnabled do
-                local args = {
-                    [1] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}
-                }
-
-                game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("ServerRewards"):FireServer(unpack(args))
-                
-                wait(1) -- Wait for 1 second before claiming again (adjust as needed)
+                for i = 1, 20 do
+                    local args = { [1] = i }
+                    game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("ServerRewards"):FireServer(unpack(args))
+                    wait() -- Wait for 1 second before claiming the next gift
+                end
+                wait() -- Wait for 1 second before starting the next round of claims
             end
         end)()
     end
