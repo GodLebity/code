@@ -1,0 +1,400 @@
+local Library = loadstring(Game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wizard"))()
+
+local PhantomForcesWindow = Library:NewWindow("Thumb War Sim")
+
+local KillingCheats = PhantomForcesWindow:NewSection("Main")
+
+-- Assuming KillingCheats is already defined and accessible
+
+KillingCheats:CreateButton("Equip Best Dumbell", function()
+    for i = 1, 12 do
+        local args = {
+            [1] = "Dumbell",
+            [2] = i -- Use the current number in the loop
+        }
+
+        -- Invoke the server to equip the tool
+        game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("FightService"):WaitForChild("RF"):WaitForChild("EquipTool"):InvokeServer(unpack(args))
+    end
+end)
+
+KillingCheats:CreateButton("Equip Best Grip", function()
+    for i = 1, 12 do
+        local args = {
+            [1] = "Grip",
+            [2] = i -- Use the current number in the loop
+        }
+
+        -- Invoke the server to equip the tool
+        game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("FightService"):WaitForChild("RF"):WaitForChild("EquipTool"):InvokeServer(unpack(args))
+    end
+end)
+
+local autoTrainActive = false -- Variable to track the toggle state
+
+KillingCheats:CreateToggle("Auto Train For ALL", function(value)
+    autoTrainActive = value -- Update the toggle state
+
+    if autoTrainActive then
+        -- Start the auto train loop
+        while autoTrainActive do
+            -- Invoke the server to play the tool
+            game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("FightService"):WaitForChild("RF"):WaitForChild("PlayTool"):InvokeServer()
+            
+            wait() -- Wait for 1 second before repeating (adjust as needed)
+        end
+    end
+end)
+
+local selectedNPC = nil
+
+KillingCheats:CreateDropdown("Choose NPC", {
+    "||GYM||", "Fat Noob", "Referee", "Nerd", "Buff Noob", "Champion", 
+    "||BEACH||", "Pirate", "Bacon", "Fishy", "Buff Shark", "Mr Krabs", 
+    "||SAMURAI||", "Student", "Ninja", "Samurai", "Master", "Shredder", 
+    "||GREEK||", "Hoplite", "Hercules", "Kratos", "Medusa", "Zeus", 
+    "||SEWER||", "Barbarian", "Hazmat", "Sewer Monster", "Enforcer", "Sewer King", 
+    "||DESERT||", "Archaeologist", "Poor Man", "Mummy", "Desert Monster", "Pharaoh"
+}, 1, function(text)
+    print(text) -- This will print the selected NPC name to the output
+    selectedNPC = text -- Store the selected NPC
+
+    -- Teleportation coordinates for each NPC
+    local teleportLocations = {
+        ["Fat Noob"] = CFrame.new(-343.316376, 8.19999599, -150.199905),
+        ["Referee"] = CFrame.new(-362.941406, 8.19999599, -150.356873),
+        ["Nerd"] = CFrame.new(-382.941406, 8.19999599, -150.356873),
+        ["Buff Noob"] = CFrame.new(-402.941406, 8.19999599, -150.356873),
+        ["Champion"] = CFrame.new(-422.941406, 8.19999599, -150.356873),
+        ["Pirate"] = CFrame.new(4558.64453, 25.0222378, -1314.01721),
+        ["Bacon"] = CFrame.new(4561.37012, 24.8648853, -1290.27673),
+        ["Fishy"] = CFrame.new(4570.43994, 24.7608223, -1267.48486),
+        ["Buff Shark"] = CFrame.new(4587.66748, 26.9553738, -1250.20972),
+        ["Student"] = CFrame.new(-2063.77319, 71.3235321, -110.745049),
+        ["Ninja"] = CFrame.new(-2083.19897, 71.4313354, -111.81588),
+        ["Samurai"] = CFrame.new(-2101.2749, 71.3359146, -116.825172),
+        ["Master"] = CFrame.new(-2119.59595, 71.3359299, -124.019165),
+        ["Shredder"] = CFrame.new(-2135.62451, 73.7494965, -134.709259),
+        ["Hoplite"] = CFrame.new(-3927.33911, 85.8050003, -4831.24902),
+        ["Hercules"] = CFrame.new(-3926.64722, 85.7973862, -4803.20068),
+        ["Kratos"] = CFrame.new(-3935.08398, 86.0409622, -4777.021),
+        ["Medusa"] = CFrame.new(-3950.92261, 86.5445786, -4756.92432),
+        ["Zeus"] = CFrame.new(-3972.05957, 87.6309509, -4743.67578),
+        ["Barbarian"] = CFrame.new(11957.5166, 25.7999859, 547.141357),
+        ["Hazmat"] = CFrame.new(11935.6025, 25.9179001, 547.039978),
+        ["Sewer Monster"] = CFrame.new(11913.5059, 26.8920975, 547.083984),
+        ["Enforcer"] = CFrame.new(11891.502, 26.8919983, 547.083984),
+        ["Sewer King"] = CFrame.new(11869.5996, 26.8919983, 547.113159),
+        ["Archaeologist"] = CFrame.new(1052.08105, 46.9119835, 320.075989),
+        ["Poor Man"] = CFrame.new(1052.08105, 47.3041725, 341.811005),
+        ["Mummy"] = CFrame.new(1052.08105, 47.4001389, 363.756989),
+        ["Desert Monster"] = CFrame.new(1052.08105, 48.1702538, 385.880005),
+        ["Pharaoh"] = CFrame.new(1052.08105, 48.1699982, 407.770996)
+    }
+
+    -- Check if the selected NPC is in the teleportLocations table
+    if teleportLocations[text] then
+        -- Teleport to the specified CFrame
+        local player = game.Players.LocalPlayer
+        if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            player.Character.HumanoidRootPart.CFrame = teleportLocations[text]
+        end
+    end
+end)
+
+local autoFightActive = false -- Variable to track if auto fight is active
+
+KillingCheats:CreateToggle("Auto Fight", function(value)
+    autoFightActive = value -- Set the auto fight state based on the toggle
+
+    if value and selectedNPC then
+        wait(0.1) -- Wait for a second before the fight
+
+        local npcIndex = nil
+        local map = nil
+
+        -- Determine the npcIndex based on the selectedNPC
+        if table.find({"Fat Noob", "Referee", "Nerd", "Buff Noob", "Champion"}, selectedNPC) then
+            npcIndex = 1 -- Gym
+            map = "Gym"
+        elseif table.find({"Pirate", "Bacon", "Fishy", "Buff Shark", "Mr Krabs"}, selectedNPC) then
+            npcIndex = 1 -- Beach
+            map = "Beach"
+        elseif table.find({"Student", "Ninja", "Samurai", "Master", "Shredder"}, selectedNPC) then
+            npcIndex = 1 -- Samurai
+            map = "Samurai"
+        elseif table.find({"Hoplite", "Hercules", "Kratos", "Medusa", "Zeus"}, selectedNPC) then
+            npcIndex = 1 -- Greek
+            map = "Greek"
+        elseif table.find({"Barbarian", "Hazmat", "Sewer Monster", "Enforcer", "Sewer King"}, selectedNPC) then
+            npcIndex = 1 -- Sewer
+            map = "Sewer"
+        elseif table.find({"Archaeologist", "Poor Man", "Mummy", "Desert Monster", "Pharaoh"}, selectedNPC) then
+            npcIndex = 1 -- Desert
+            map = "Desert"
+        end
+
+        -- Determine the specific NPC index within the map
+        if map then
+            if map == "Gym" then
+                if selectedNPC == "Fat Noob" then npcIndex = 1
+                elseif selectedNPC == "Referee" then npcIndex = 2
+                elseif selectedNPC == "Nerd" then npcIndex = 3
+                elseif selectedNPC == "Buff Noob" then npcIndex = 4
+                elseif selectedNPC == "Champion" then npcIndex = 5
+                end
+            elseif map == "Beach" then
+                if selectedNPC == "Pirate" then npcIndex = 1
+                elseif selectedNPC == "Bacon" then npcIndex = 2
+                elseif selectedNPC == "Fishy" then npcIndex = 3
+                elseif selectedNPC == "Buff Shark" then npcIndex = 4
+                elseif selectedNPC == "Mr Krabs" then npcIndex = 5
+                end
+            elseif map == "Samurai" then
+                if selectedNPC == "Student" then npcIndex = 1
+                elseif selectedNPC == "Ninja" then npcIndex = 2
+                elseif selectedNPC == "Samurai" then npcIndex = 3
+                elseif selectedNPC == "Master" then npcIndex = 4
+                elseif selectedNPC == "Shredder" then npcIndex = 5
+                end
+            elseif map == "Greek" then
+                if selectedNPC == "Hoplite" then npcIndex = 1
+                elseif selectedNPC == "Hercules" then npcIndex = 2
+                elseif selectedNPC == "Kratos" then npcIndex = 3
+                elseif selectedNPC == "Medusa" then npcIndex = 4
+                elseif selectedNPC == "Zeus" then npcIndex = 5
+                end
+            elseif map == "Sewer" then
+                if selectedNPC == "Barbarian" then npcIndex = 1
+                elseif selectedNPC == "Hazmat" then npcIndex = 2
+                elseif selectedNPC == "Sewer Monster" then npcIndex = 3
+                elseif selectedNPC == "Enforcer" then npcIndex = 4
+                elseif selectedNPC == "Sewer King" then npcIndex = 5
+                end
+            elseif map == "Desert" then
+                if selectedNPC == "Archaeologist" then npcIndex = 1
+                elseif selectedNPC == "Poor Man" then npcIndex = 2
+                elseif selectedNPC == "Mummy" then npcIndex = 3
+                elseif selectedNPC == "Desert Monster" then npcIndex = 4
+                elseif selectedNPC == "Pharaoh" then npcIndex = 5
+                end
+            end
+
+            -- Fire the proximity prompt based on the determined map and npcIndex indefinitely
+            if npcIndex then
+                while autoFightActive do -- Continue as long as the toggle is on
+                    fireproximityprompt(workspace.Main.Maps[map].Npcs[npcIndex].Table.MainTable.FightPrompt) -- Call the function to fire the prompt
+                    wait() -- Wait for a second between prompts
+                end
+            end
+        end
+    end
+end)
+
+local autoClickFightActive = false -- Variable to track the toggle state
+
+KillingCheats:CreateToggle("Auto Click Fight", function(value)
+    autoClickFightActive = value -- Update the toggle state
+
+    if autoClickFightActive then
+        -- Start the auto click fight loop
+        while autoClickFightActive do
+            -- Invoke the server to add fight
+            game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("FightService"):WaitForChild("RF"):WaitForChild("AddFight"):InvokeServer()
+            
+            wait() -- Wait for 1 second before repeating (adjust as needed)
+        end
+    end
+end)
+
+-- Create a dropdown for selecting trails
+local trails = {
+    "yellow (200)", "green (500)", "blue (1k)", "orange (3.5k)", "red (8k)", 
+    "argon (20k)", "cool sky (55k)", "combi (100k)", "ami (150k)", 
+    "atlas (250k)", "dark knight (500k)", "sulphur (1.5M)", "predawn (5M)", 
+    "lizard (15M)", "terminal (40M)", "easymed (100M)", "quepal (250M)", 
+    "rastafari (400M)", "piglet (750M)", "montel carlo (1.5B)"
+}
+
+local selectedTrail = "yellow" -- Default selected trail
+
+KillingCheats:CreateDropdown("Choose Trail", trails, 1, function(text)
+    print(text)
+    -- Extract the trail name from the selected text
+    selectedTrail = text:match("^(%w+)") -- This will get the color name before the space
+end)
+
+KillingCheats:CreateButton("Buy Trail", function()
+    local args = {
+        [1] = selectedTrail -- Use the selected trail name
+    }
+
+    -- Invoke the server to purchase the selected trail
+    game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("TrailService"):WaitForChild("RF"):WaitForChild("Purchase"):InvokeServer(unpack(args))
+end)
+
+-- Create a dropdown for selecting skins
+local skins = {
+    "Red (50)", "Purple (200)", "Red Spiked (500)", "Palm (1k)", 
+    "Nouget (2.5k)", "Lego (35k)", "Blue Spiked (70k)", "Chest (150k)", 
+    "Bamboo (450k)", "Cactus (1.2M)", "Hoplite (8M)", "Zeus (25M)", 
+    "Slime (75M)", "Sewer Spiked (250M)", "Pipe (500M)", "Sand (1.5B)", 
+    "Opunti (4B)"
+}
+
+local selectedSkin = "Red" -- Default selected skin
+
+KillingCheats:CreateDropdown("Choose Skin", skins, 1, function(text)
+    print(text)
+    -- Extract the skin name from the selected text
+    selectedSkin = text:match("^(%w+)%s") -- This will get the skin name before the space
+end)
+
+KillingCheats:CreateButton("Buy Skin", function()
+    local args = {
+        [1] = selectedSkin -- Use the selected skin name
+    }
+
+    -- Invoke the server to purchase the selected skin
+    game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("TrailService"):WaitForChild("RF"):WaitForChild("Purchase"):InvokeServer(unpack(args))
+end)
+
+local autoCollectActive = false -- Variable to track the toggle state
+
+KillingCheats:CreateToggle("Auto Collect Gifts", function(value)
+    autoCollectActive = value -- Update the toggle state
+
+    if autoCollectActive then
+        -- Start the auto collect loop
+        while autoCollectActive do
+            for i = 1, 12 do
+                local args = {
+                    [1] = i -- Use the current number in the loop
+                }
+
+                -- Invoke the server to claim the time reward
+                game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("RewardsService"):WaitForChild("RF"):WaitForChild("ClaimTimeReward"):InvokeServer(unpack(args))
+                
+                wait(0.2) -- Wait for 1 second before collecting the next gift (adjust as needed)
+            end
+        end
+    end
+end)
+
+local autoSpinActive = false -- Variable to track the toggle state
+
+KillingCheats:CreateToggle("Auto Spin", function(value)
+    autoSpinActive = value -- Update the toggle state
+
+    if autoSpinActive then
+        -- Start the auto spin loop
+        while autoSpinActive do
+            -- Invoke the server to perform the spin
+            game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("RewardsService"):WaitForChild("RF"):WaitForChild("Spin"):InvokeServer()
+            
+            wait() -- Wait for 1 second before spinning again (adjust as needed)
+        end
+    end
+end)
+
+local KillingCheats = PhantomForcesWindow:NewSection("Eggs")
+
+local selectedEgg = "CyanGymEgg" -- Default selected egg
+local autoOpenEggActive = false -- Variable to track the toggle state
+
+-- Create a dropdown for selecting eggs
+KillingCheats:CreateDropdown("Choose Egg", {
+    "||GYM||", "CyanGymEgg", "RedGymEgg", "BigGymEgg", 
+    "||BEACH||", "CoconutEgg", "PalmEgg", "ChestEgg", 
+    "||SAMURAI||", "SmallSamuraiEgg", "BambooEgg", "BigSamuraiEgg", 
+    "||GREEK||", "ElectricEgg", "RomaEgg", "GreenGreekEgg", 
+    "||SEWER||", "SewerHatEgg", "SewerSpikeEgg", "SewerPipeEgg", 
+    "||DESERT||", "MineDesertEgg", "GreenDesertEgg", "BigDesertEgg"
+}, 1, function(text)
+    print(text)
+    selectedEgg = text -- Update the selected egg based on the dropdown selection
+end)
+
+-- Create a toggle for auto opening eggs
+KillingCheats:CreateToggle("Auto Open Egg", function(value)
+    autoOpenEggActive = value -- Update the toggle state
+
+    if autoOpenEggActive then
+        -- Start the auto open egg loop
+        while autoOpenEggActive do
+            local args = {
+                [1] = "1xHatch", -- Action to hatch the egg
+                [2] = selectedEgg -- Use the selected egg from the dropdown
+            }
+
+            -- Invoke the server to open the selected egg
+            game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("DataService"):WaitForChild("RF"):WaitForChild("EggAction"):InvokeServer(unpack(args))
+            
+            wait() -- Wait for 1 second before opening the egg again (adjust as needed)
+        end
+    end
+end)
+
+local KillingCheats = PhantomForcesWindow:NewSection("Misc")
+
+-- LocalScript to change character speed in Roblox with toggle
+
+-- Get the player
+local player = game.Players.LocalPlayer
+
+-- Default speed
+local defaultSpeed = 30
+local boostedSpeed = 75
+
+-- Function to change the character speed
+local function changeSpeed(newSpeed)
+    -- Wait for the character to load
+    local character = player.Character or player.CharacterAdded:Wait()
+    
+    -- Wait for the Humanoid to be available
+    local humanoid = character:WaitForChild("Humanoid")
+    
+    -- Change the WalkSpeed
+    humanoid.WalkSpeed = newSpeed
+end
+
+-- Create a toggle for speed
+KillingCheats:CreateToggle("Speed", function(value)
+    if value then
+        -- If toggle is on, set speed to boostedSpeed
+        changeSpeed(boostedSpeed)
+    else
+        -- If toggle is off, reset speed to defaultSpeed
+        changeSpeed(defaultSpeed)
+    end
+end)
+
+-- Optional: Reset speed when the character respawns
+player.CharacterAdded:Connect(function(character)
+    local humanoid = character:WaitForChild("Humanoid")
+    humanoid.WalkSpeed = defaultSpeed -- Reset to default speed
+end)
+
+KillingCheats:CreateButton("Anti-Afk", function()
+wait(0.5)local ba=Instance.new("ScreenGui")
+local ca=Instance.new("TextLabel")local da=Instance.new("Frame")
+local _b=Instance.new("TextLabel")local ab=Instance.new("TextLabel")ba.Parent=game.CoreGui
+ba.ZIndexBehavior=Enum.ZIndexBehavior.Sibling;ca.Parent=ba;ca.Active=true
+ca.BackgroundColor3=Color3.new(0.176471,0.176471,0.176471)ca.Draggable=true
+ca.Position=UDim2.new(0.698610067,0,0.098096624,0)ca.Size=UDim2.new(0,370,0,52)
+ca.Font=Enum.Font.SourceSansSemibold;ca.Text="Anti AFK"ca.TextColor3=Color3.new(0,1,0)
+ca.TextSize=50;da.Parent=ca
+da.BackgroundColor3=Color3.new(0.196078,0.196078,0.196078)da.Position=UDim2.new(0,0,1.0192306,0)
+da.Size=UDim2.new(0,370,0,107)_b.Parent=da
+_b.BackgroundColor3=Color3.new(0.176471,0.176471,0.176471)_b.Position=UDim2.new(0,0,0.800455689,0)
+_b.Size=UDim2.new(0,370,0,21)_b.Font=Enum.Font.Arial;_b.Text="Made By sunnii_mylife#2464"
+_b.TextColor3=Color3.new(0,1,0)_b.TextSize=24;ab.Parent=da
+ab.BackgroundColor3=Color3.new(0.176471,0.176471,0.176471)ab.Position=UDim2.new(0,0,0.158377,0)
+ab.Size=UDim2.new(0,370,0,44)ab.Font=Enum.Font.ArialBold;ab.Text="Status: Active"
+ab.TextColor3=Color3.new(0,1,0)ab.TextSize=35;local bb=game:service'VirtualUser'
+game:service'Players'.LocalPlayer.Idled:connect(function()
+bb:CaptureController()bb:ClickButton2(Vector2.new())
+ab.Text="Roblox tried to kick u but i kicked him instead"wait(2)ab.Text="Status : Active"end)
+end)
+
+local KillingCheats = PhantomForcesWindow:NewSection("Credit: sunnii_mylife")
