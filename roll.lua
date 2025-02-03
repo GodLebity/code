@@ -11,7 +11,7 @@ KillingCheats:CreateToggle("Auto Roll", function(value)
     isAutoRollEnabled = value
 
     if isAutoRollEnabled then
-        -- Start the auto roll loop
+        --Start
         autoRollConnection = game:GetService("RunService").Heartbeat:Connect(function()
             if isAutoRollEnabled then
                 game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Roll"):FireServer()
@@ -25,7 +25,7 @@ KillingCheats:CreateToggle("Auto Roll", function(value)
             end
         end)
     else
-        -- If toggled off, disconnect the connection
+        --toggled off
         if autoRollConnection then
             autoRollConnection:Disconnect()
             autoRollConnection = nil
@@ -43,13 +43,13 @@ KillingCheats:CreateToggle("Auto Collect Gifts", function(value)
             for i = 1, 9 do
                 local args = { [1] = i }
                 ReplicatedStorage:WaitForChild("GiftFolder"):WaitForChild("ClaimGift"):InvokeServer(unpack(args))
-                wait() -- Wait for 1 second between claims to avoid spamming
+                wait() 
             end
-            wait() -- Wait before starting the next collection cycle
+            wait()
         end
     end
 
-    -- Start or stop collecting gifts based on the toggle value
+    -- Start or stop
     if value then
         collectGifts() -- Start collecting gifts
     else
