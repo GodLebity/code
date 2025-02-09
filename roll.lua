@@ -1,6 +1,6 @@
 local Library = loadstring(Game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wizard"))()
 
-local PhantomForcesWindow = Library:NewWindow("Ninja Fighting Simulator")
+local PhantomForcesWindow = Library:NewWindow("Roll RNG")
 
 local KillingCheats = PhantomForcesWindow:NewSection("Main")
 
