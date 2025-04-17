@@ -19,14 +19,14 @@ KillingCheats:CreateToggle("Auto Collect", function(value)
                 local head = character:FindFirstChild("Head")
 
                 if not head then
-                    task.wait(1.4)
+                    task.wait(1.45)
                     continue
                 end
 
                 local activePointsFolder = workspace:FindFirstChild("ActivePoints")
                 if not activePointsFolder then
                     warn("ActivePoints folder not found")
-                    task.wait(1.4)
+                    task.wait(1.45)
                     continue
                 end
 
@@ -46,7 +46,7 @@ KillingCheats:CreateToggle("Auto Collect", function(value)
 
                         -- Wait until it's removed from game (collected)
                         repeat
-                            task.wait(1.629)
+                            task.wait(1.645)
                         until not activePoint:IsDescendantOf(game) or not autoCollectEnabled
 
                         collected = true
@@ -56,7 +56,7 @@ KillingCheats:CreateToggle("Auto Collect", function(value)
 
                 if not collected then
                     -- No active parts found, wait before retrying
-                    task.wait(1.629)
+                    task.wait(1.645)
                 end
             end
         end)
