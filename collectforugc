@@ -19,14 +19,14 @@ KillingCheats:CreateToggle("Auto Collect", function(value)
                 local head = character:FindFirstChild("Head")
 
                 if not head then
-                    task.wait(1.45)
+                    task.wait(0.1)
                     continue
                 end
 
                 local activePointsFolder = workspace:FindFirstChild("ActivePoints")
                 if not activePointsFolder then
                     warn("ActivePoints folder not found")
-                    task.wait(1.45)
+                    task.wait(0.1)
                     continue
                 end
 
@@ -40,13 +40,25 @@ KillingCheats:CreateToggle("Auto Collect", function(value)
                     if activePoint then
                         -- Move part to character
                         activePoint.Parent = character
-                        activePoint.CFrame = head.CFrame * CFrame.new(0, 0.5, 0)
-                        activePoint.Anchored = true
+                        activePoint.CFrame = head.CFrame * CFrame.new(0, 2.5, 0)
+                        activePoint.Anchored = false -- Allow it to fall
                         activePoint.CanCollide = false
+
+                        -- Make the gem fall down
+                        local fallDuration = 0.5 -- Duration for the gem to fall
+                        local startPosition = activePoint.Position
+                        local endPosition = startPosition - Vector3.new(0, 5, 0) -- Fall down 5 units
+
+                        -- Animate the fall
+                        for i = 0, 1, 0.1 do
+                            if not autoCollectEnabled then break end
+                            activePoint.Position = startPosition:Lerp(endPosition, i)
+                            task.wait(fallDuration * 0.1)
+                        end
 
                         -- Wait until it's removed from game (collected)
                         repeat
-                            task.wait(1.645)
+                            task.wait(0.1)
                         until not activePoint:IsDescendantOf(game) or not autoCollectEnabled
 
                         collected = true
@@ -56,7 +68,7 @@ KillingCheats:CreateToggle("Auto Collect", function(value)
 
                 if not collected then
                     -- No active parts found, wait before retrying
-                    task.wait(1.645)
+                    task.wait(0.1) -- Reduced wait time to check for new gems more frequently
                 end
             end
         end)
